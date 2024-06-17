@@ -1,9 +1,11 @@
 // Navbar1.js
 import React from 'react';
 import { useDispatch } from 'react-redux';
+// eslint-disable-next-line no-unused-vars
 import { logoutUser, logout } from '../redux/userSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../assets/DARKOUM.png";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Navbar1 = () => {
     const navigate = useNavigate();
@@ -70,11 +72,14 @@ const Navbar1 = () => {
                     padding: '8px 15px',
                     borderRadius: 5,
                     cursor: 'pointer',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    display:'flex',
+                    justifyContent: 'space-between'
                 }} 
                 onClick={handleLogout}
             >
                 Se déconnecter
+                <LogoutOutlinedIcon style={{marginLeft:"5px"}}/>
             </button>
         </nav>
     );

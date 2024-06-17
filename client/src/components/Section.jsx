@@ -14,7 +14,7 @@ import WilayaSelector from "../components/WilayaSelector";
 import axios from "axios";
 import Footer from "../components/footer";
 import home from "../assets/home.jpg";
-
+import SearchIcon from '@mui/icons-material/Search';
 const Section = () => {
   const [formData, setFormData] = useState({
     typeAnnonce: "",
@@ -87,7 +87,8 @@ const Section = () => {
               }
             />
           </div>
-          <button className="submit-button" type="submit">
+          <button className="submit-button" type="submit" style={{ display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+            <SearchIcon/>
             Rechercher
           </button>
         </form>

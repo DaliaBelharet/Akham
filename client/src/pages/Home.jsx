@@ -7,6 +7,9 @@ import Properties from "../components/properties";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import SimpleSection from "../components/SimpleSection";
 import { useSelector } from "react-redux";
+import ReactStars from 'react-stars';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+
 
 const Home = () => {
   const [avis, setAvis] = useState([]);
@@ -72,6 +75,28 @@ const Home = () => {
 
     }
   };
+
+  const buttonStyle = {
+    marginTop: '10px',
+    backgroundColor: '#4CAF50',
+    border: 'none',
+    color: 'white',
+    padding: '15px 32px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '16px',
+    margin: '4px 2px', 
+    cursor: 'pointer',
+    borderRadius: '12px',
+    transitionDuration: '0.4s',
+  };
+
+  const buttonHoverStyle = {
+    backgroundColor: '#45a049',
+  };
+
+  const [hover, setHover] = useState(false);
 
   return (
     <div>
@@ -213,14 +238,23 @@ const Home = () => {
         <div className="comment-form">
           <h3>Ajouter un commentaire</h3>
           <form onSubmit={handleSubmit}>
-            <textarea
+            {/* <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Écrivez votre commentaire ici"
               required
-            />
+            /> */}
             <div>
-              <select
+              <div>
+                <ReactStars
+                  count={5}
+                  onChange={setNewRating}
+                  size={24}
+                  color2={'#ffd700'} // Color of the filled stars
+                  value={newRating}
+                />
+              </div>
+              {/* <select
                 value={newRating}
                 onChange={(e) => setNewRating(parseInt(e.target.value))}
                 required
@@ -231,8 +265,26 @@ const Home = () => {
                 <option value="3">3 étoiles</option>
                 <option value="4">4 étoiles</option>
                 <option value="5">5 étoiles</option>
-              </select>
-              <button type="submit">Soumettre</button>
+              </select> */}
+              {/* <button type="submit">Soumettre</button> */}
+              <div>
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Écrivez votre commentaire ici..."
+                required
+                style={{ width: '100%', height: '100px', marginTop: '10px' }}
+              />
+            </div>
+            <button
+              type="submit"
+              style={{ ...buttonStyle, ...(hover ? buttonHoverStyle : {}) }}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              <ReviewsIcon style={{marginRight:"5px"}}/>
+              Soumettre
+            </button>
             </div>
           </form>
         </div>
