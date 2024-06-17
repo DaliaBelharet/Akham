@@ -76,6 +76,30 @@ const Search = ({ userId }) => {
     }
   };
 
+  const handleUpdateFavorite = async (houseId) => {
+    try {
+      const action = favorites.includes(houseId) ? 'remove' : 'add';
+
+      await axios.put(
+        `http://localhost:5000/api/v1/auth/${userId}/updateFav`,
+        { houseId, action },
+        { withCredentials: true }
+      );
+
+      if (action === 'remove') {
+        setFavorites(favorites.filter((fav) => fav !== houseId));
+        toast.success("Ce bien a été supprimé de vos favoris !");
+      } else {
+        setFavorites([...favorites, houseId]);
+        toast.success("Ce bien a été ajouté à votre liste de favoris !");
+      }
+    } catch (err) {
+      console.error("Erreur lors de la mise à jour des favoris:", err);
+      toast.error("Une erreur est survenue lors de la mise à jour des favoris.");
+    }
+  };
+
+
   const sortHouses = (houses) => {
     switch (sortBy) {
       case "recent":
@@ -237,7 +261,7 @@ const Search = ({ userId }) => {
                   </div>
                 </Link>
                 <button
-                  onClick={() => handleFavorite(house._id)}
+                  onClick={() => handleUpdateFavorite(house._id)}
                   style={{
                     background: "none",
                     border: "none",

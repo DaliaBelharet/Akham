@@ -34,11 +34,16 @@ import MyFavorites from "../pages/MyFavorites.jsx";
 import Avis from "../pages/Avis.jsx";
 
 const AppRoutes = () => {
-  const { user, status, error } = useSelector((state) => state.user);
-  const userId = user;
+  // eslint-disable-next-line no-unused-vars
+  // const { user, status, error } = useSelector((state) => state.user);
+  // const userId = user;
+  
+  const { currentUser } = useSelector((state) => state.user);
+  const userId = currentUser.user._id;
 
-  console.log("user:", user);
-  console.log("status:", status);
+  console.log("user:", currentUser);
+  console.log("user id:", userId);
+  // console.log("status:", status);
 
   return (
     <Router>

@@ -12,13 +12,14 @@ const Home = ({userId}) => {
   const [avis, setAvis] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [newRating, setNewRating] = useState(0);
-  console.log('user',userId)
+  // console.log('user',userId)
   // console.log('userId',userId._id)
   const { currentUser } = useSelector((state) => state.user);
-  console.log('currentUser',currentUser)
+  // console.log('currentUser',currentUser)
   const userID=currentUser.user._id;
-  console.log('userID',userID)
+  // console.log('userID',userID)
 
+  const fetchInterval = 2000;
 
 
 
@@ -33,7 +34,10 @@ const Home = ({userId}) => {
     };
 
     fetchAvis();
-  }, []);
+
+    const intervalId = setInterval(fetchAvis, fetchInterval);
+    return () => clearInterval(intervalId);
+  }, [fetchInterval]);
 
   const renderStars = (note) => {
     const stars = [];
@@ -55,9 +59,9 @@ const Home = ({userId}) => {
         note: newRating,
         utilisateur:userID// Update this as needed
       });
-      console.log('response data',response.data)
+      // console.log('response data',response.data)
       setAvis([...avis, response.data.data.avis]);
-      console.log('avis',avis)
+      // console.log('avis',avis)
       setNewComment("");
       setNewRating(0);
     } catch (error) {

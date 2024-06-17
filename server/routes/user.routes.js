@@ -20,6 +20,7 @@ router.post("/NewPassword/:id/:token", authController.NewPassword);
 
 router.post('/favorites/add/:id', authController.addToFavorites);
 router.post('/favorites/remove', authController.removeFromFavorites);
+router.put('/:id/updateFav', authController.updateFavorites);
 router.get('/:userId', authController.getFavorites);
 
 router.get('/dashboard', requireAuth, authorizeRoles('user'), authController.userDashboard);

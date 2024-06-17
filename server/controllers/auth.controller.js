@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const House = require("../models/house.model");
 const FormModel = require('../models/form.model');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
 
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
@@ -236,6 +237,49 @@ module.exports.removeFromFavorites = async (req, res) => {
     res.status(500).json({ message: 'Une erreur est survenue lors de la suppression de la maison des favoris.' });
   }
 };
+
+module.exports.updateFavorites = async (req, res) => {
+  const userId = req.params.id;
+  const { houseId, action } = req.body;
+  console.log('req.body', req.body);
+  console.log('req.params', req.params);
+
+  try {
+    const house = await House.findById(houseId);
+    if (!house) {
+      return res.status(404).json({ message: "Maison non trouvée." });
+    }
+
+    let update;
+    if (action === 'add') {
+      update = { $addToSet: { favorites: houseId } };
+    } else if (action === 'remove') {
+      update = { $pull: { favorites: new mongoose.Types.ObjectId(houseId) } };
+    } else {
+      return res.status(400).json({ message: "Action invalide. Utilisez 'add' ou 'remove'." });
+    }
+
+    const user = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      update,
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+
+    const message = action === 'add' 
+      ? "Maison ajoutée aux favoris de l'utilisateur avec succès." 
+      : "Maison supprimée des favoris de l'utilisateur avec succès.";
+
+    res.status(200).json({ message, favorites: user.favorites });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des favoris :', error);
+    res.status(500).json({ message: 'Une erreur est survenue lors de la mise à jour des favoris.' });
+  }
+};
+
 
 
 module.exports.getFavorites = async (req, res) => {
