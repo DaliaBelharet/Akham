@@ -27,6 +27,10 @@ const houseSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    locationMapLink: {
+        type: String,
+        required: true
+      },
      
     images: [{
        url: {type: String},
