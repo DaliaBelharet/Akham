@@ -19,6 +19,10 @@ import logo from '../../assets/avtr.png';
 import { FcGoogle } from "react-icons/fc";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData, loginStart, loginSuccess, loginFailure } from '../../redux/userSlice';
+import { auth, provider } from "../../firebase";
+import { signInWithPopup } from "firebase/auth";
+
+
 
 import "./style.css"
 
@@ -28,8 +32,11 @@ export default function SignInSide() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  // const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
+  // console.log("isAuthenticated :", isAuthenticated);
 
   const navigate = useNavigate();
 
@@ -65,10 +72,39 @@ export default function SignInSide() {
     }
   };
 
+  const signInWithGoogle = async () => {
+      if (loading) return;
+      setLoading(true);
+      dispatch(loginStart());
+      signInWithPopup(auth, provider)
+      .then((result) => {
+        axios
+        .post("http://localhost:5000/api/v1/auth/googleAuth", {
+          nomComplet: result.user.displayName,
+          email: result.user.email,
+        },{
+          withCredentials: true
+        })
+        .then((res) => {
+          // console.log("res :", res)
+          // console.log("res data :", res.data)
+          dispatch(loginSuccess(res.data));
+          navigate("/home")
+        });
+      })
+      .catch((error) => {
+        dispatch(loginFailure());
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const handleForgotPassword = () => {
     navigate('/ResetPassword');
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleAddReview = () => {
     // Vérifier si l'utilisateur est connecté
     // if (!isAuthenticated) {
@@ -175,8 +211,8 @@ export default function SignInSide() {
               </Button>
             
               <div className="google-sign-in">
-  <button type="button" >
-  <Link to="http://localhost:5000/auth/google"  >Continuer avec Google</Link>    <FcGoogle size={"25px"} className="iconeGoogle" />
+  <button type="button" onClick={signInWithGoogle} disabled={loading}>
+  <p>Continuer avec Google</p>    <FcGoogle size={"25px"} className="iconeGoogle" />
   </button>
 
 </div>

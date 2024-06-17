@@ -62,6 +62,31 @@ module.exports.signIn = async (req, res) => {
   }
 };
 
+module.exports.googleAuth = async (req, res, next) => {
+  try {
+    const user = await UserModel.findOne({ email: req.body.email });
+    if (user) {
+      const token = createToken(user._id);
+
+      // console.log(" user :", user);
+      res.cookie('jwt', token, { httpOnly: true, maxAge });
+      res.status(200).json({ user: user._doc });
+    } else {
+      const newUser = new UserModel({
+        ...req.body,
+        fromGoogle: true,
+      });
+      const savedUser = await newUser.save();
+      // console.log(" savedUser :", savedUser);
+      const token = createToken(savedUser._id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge });
+      res.status(200).json({ user: savedUser._doc });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports.logOut = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
   res.redirect('/');

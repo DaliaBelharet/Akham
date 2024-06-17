@@ -8,8 +8,9 @@ import Navbar from "../components/Navbar1";
 import Footer from "../components/footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
-const Search = ({ userId }) => {
+const Search = () => {
   const [houses, setHouses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,6 +18,8 @@ const Search = ({ userId }) => {
   const [hoveredHouse, setHoveredHouse] = useState(null);
   const [sortBy, setSortBy] = useState("recent");
   const [showSortOptions, setShowSortOptions] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  const userId = currentUser.user._id;
 
   useEffect(() => {
     const fetchHouses = async () => {

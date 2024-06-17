@@ -12,6 +12,8 @@ passport.use(new GoogleStrategy({
     email: profile._json.email,
     name: profile._json.name,
   };
+
+  console.log(" googleUser : ", googleUser);
   return done(null, googleUser); // Transmet les informations de l'utilisateur à Passport.js
 }));
 

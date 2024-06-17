@@ -8,13 +8,16 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import SimpleSection from "../components/SimpleSection";
 import { useSelector } from "react-redux";
 
-const Home = ({userId}) => {
+const Home = () => {
   const [avis, setAvis] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [newRating, setNewRating] = useState(0);
   // console.log('user',userId)
   // console.log('userId',userId._id)
   const { currentUser } = useSelector((state) => state.user);
+  // const { currentUser } = useSelector((state) => state.user);
+  // eslint-disable-next-line no-unused-vars
+  const userId = currentUser.user._id;
   // console.log('currentUser',currentUser)
   const userID=currentUser.user._id;
   // console.log('userID',userID)

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInAnonymously } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB842Oj_SNvb1udWNTZFohd4zYrXhHwO-M",
@@ -16,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 signInAnonymously(auth)
   .then(() => {
@@ -25,4 +26,4 @@ signInAnonymously(auth)
     console.error("Error signing in anonymously:", error);
   });
 
-export { storage, auth };
+export { storage, auth, provider };

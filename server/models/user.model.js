@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
-      max: 1024,
-      minlength: 6
+      // required: true,
+      // max: 1024,
+      // minlength: 6
     },
 
     phoneNumber: {
@@ -40,7 +40,10 @@ const userSchema = new mongoose.Schema(
     resetTokenExpiration:{
       type: Date,
     },
-  
+    fromGoogle: {
+      type: Boolean,
+      default: false,
+    },
     
    
     otpCode: {

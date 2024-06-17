@@ -39,10 +39,10 @@ const AppRoutes = () => {
   // const userId = user;
   
   const { currentUser } = useSelector((state) => state.user);
-  const userId = currentUser.user._id;
+  // const userId = currentUser.user._id;
 
   console.log("user:", currentUser);
-  console.log("user id:", userId);
+  // console.log("user id:", userId);
   // console.log("status:", status);
 
   return (
@@ -59,22 +59,22 @@ const AppRoutes = () => {
         <Route path="/NewPassword/:id/:token" element={<NewPassword />} />
         <Route path="/Adminlogin" element={<AdminLogin />} />
 
-        <Route path="/home" element={<Home userId={userId}/>} />
+        <Route path="/home" element={<Home />} />
         <Route path="/NosServices" element={<NosServices />} />
         <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Search" element={<Search userId={userId} />} />
-        <Route path="/myFavorites" element={<MyFavorites userId={userId} />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/myFavorites" element={<MyFavorites/>} />
         <Route path="/visit" element={<VisiteForm />} />
         <Route path="/confirmation" element={<Confirmation />} />
         <Route path="/users" element={<Users />} />
         <Route path="/DemandeVisit" element={<DemandeVisit />} />
         <Route path="/OurHomes" element={<OurHomes />} />
-        <Route path="/Avis" element={<Avis userId={userId}/> } />
+        <Route path="/Avis" element={<Avis/> } />
 
         <Route path="/Admin" element={<AdminAccueil />} />
         <Route path="/AddHomes" element={<AddHomes />} />
         <Route path="/HouseDetails/:id" element={<HouseDetails />} />
-        <Route path="/search-results" element={<SearchResults userId={userId}  />} />
+        <Route path="/search-results" element={<SearchResults />} />
  
         <Route path="/erreur" element={<CompteErreur />} />
 

@@ -9,6 +9,7 @@ const authController = require('../controllers/auth.controller');
 //auth
 router.post("/register", authController.signUp);
 router.post("/login", authController.signIn);
+router.post("/googleAuth", authController.googleAuth);
 router.get('/logout', authController.logOut);
 
 router.post('/search', authController.findHouses); 

@@ -6,10 +6,14 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import sorry from '../assets/sorry.png';
 import Navbar from '../components/Navbar1';
 import Footer from '../components/footer';
+import { useSelector } from 'react-redux';
 
 const SearchResults = () => {
   const location = useLocation();
   const { houses, loading } = location.state || { houses: [], loading: false };
+  const { currentUser } = useSelector((state) => state.user);
+  // eslint-disable-next-line no-unused-vars
+  const userId = currentUser.user._id;
 
   if (loading) {
     return (
@@ -53,6 +57,7 @@ const SearchResults = () => {
                   {house.images && house.images.length > 0 ? (
                     <img src={house.images[0].url} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="House" />
                   ) : (
+                    // eslint-disable-next-line jsx-a11y/img-redundant-alt
                     <img src={sorry} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="No Image Available" />
                   )}
                 </div>

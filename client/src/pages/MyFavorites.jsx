@@ -6,12 +6,15 @@ import Navbar from "../components/Navbar1";
 import Footer from "../components/footer";
 import { IoArrowBackCircle } from "react-icons/io5";
 import notFoundImage from "../assets/notfound.png"; // Image de secours
+import { useSelector } from "react-redux";
 
-const MyFavorites = ({ userId }) => {
+const MyFavorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hoveredHouse, setHoveredHouse] = useState(null);
+  const { currentUser } = useSelector((state) => state.user);
+  const userId = currentUser.user._id;
 
   useEffect(() => {
     const fetchFavorites = async () => {
