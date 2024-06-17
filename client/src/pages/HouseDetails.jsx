@@ -7,6 +7,8 @@ import { PiVirtualRealityBold } from "react-icons/pi";
 import Navbar from '../components/Navbar1';
 import Footer from '../components/footer';
 import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 Modal.setAppElement('#root');  
 
@@ -62,7 +64,13 @@ const HouseDetails = () => {
   }, [handleNextImage, handlePrevImage]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ textAlign: "center", marginTop: "120px", fontFamily: "Arial, sans-serif" }}>
+        <Navbar />
+        <div style={{ fontSize: "24px", marginBottom: "20px" }}>Chargement en cours...</div>
+        <FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: "50px", color: "#F27438" }} />
+      </div>
+    );
   }
 
   if (error) {
